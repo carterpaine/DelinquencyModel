@@ -149,8 +149,8 @@ def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, p
     pdf.cell(200, 10, txt=f"Decision Context: {decision}", ln=True)
     pdf.cell(200, 10, txt=f"Contract Years: {contract_years}", ln=True)
     pdf.cell(200, 10, txt=f"Career Avg WAR: {avg_WAR_career:.2f}", ln=True)
-    pdf.cell(200, 10, txt=f"3-Year Decline Probability: {prob_3:.2f}", ln=True)
-    pdf.cell(200, 10, txt=f"5-Year Decline Probability: {prob_5:.2f}", ln=True)
+    pdf.cell(200, 10, txt=f"3-Year Similar WAR Probability: {prob_3:.2f}", ln=True)
+    pdf.cell(200, 10, txt=f"5-Year Similar WAR Probability: {prob_5:.2f}", ln=True)
     pdf.ln(5)
     pdf.multi_cell(0, 10, txt=f"Recommendation: {recommendation}")
     pdf.ln(10)
@@ -159,11 +159,12 @@ def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, p
         pdf.cell(200, 10, txt="Similar Players with Alternative Recommendations:", ln=True)
         pdf.ln(5)
         for _, row in similar_df.iterrows():
-            text = (
-                f"{row['Name']} | WAR: {row['avg_WAR_career']:.2f} | "
-                f"3yr: {row['prob_decline_3']:.2f} | 5yr: {row['prob_decline_5']:.2f} | "
-                f"Rec: {row['Rec']}"
-            )
+           text = (
+                f"{row['Name']} | avg_WAR_career: {row['average_WAR_career']:.2f} | "
+                f"3-Year Similar WAR Probability: {row['prob_decline_3']:.2f} | "
+                f"5-Year Similar WAR Probability: {row['prob_decline_5']:.2f} | "
+                f"Recommendation: {row['Rec']}"
+        )
             pdf.multi_cell(0, 10, txt=text)
             pdf.ln(1)
     else:
@@ -203,15 +204,24 @@ matching_recs = similar_players[similar_players['Rec'] != recommendation]
 # --- Display Player Report ---
 st.subheader("Player Report")
 st.write(f"**Decision Context:** {decision}")
-st.write(f"**3-Year Decline Probability:** {prob_3:.2f}")
-st.write(f"**5-Year Decline Probability:** {prob_5:.2f}")
+st.write(f"**3-Year Similar WAR Probability:** {prob_3:.2f}")
+st.write(f"**5-Year Similar WAR Probability:** {prob_5:.2f}")
 st.write(f"**Career Avg WAR:** {avg_WAR_career:.2f}")
 st.markdown(f"### **Recommendation:** {recommendation}")
 
 # --- Similar Player Suggestions ---
 if not matching_recs.empty:
     st.subheader("Alternative Options – Similar Players")
-    st.dataframe(matching_recs[['Name', 'avg_WAR_career', 'prob_decline_3', 'prob_decline_5', 'Rec']])
+    similar_display = matching_recs[['Name', 'average_WAR_career', 'prob_decline_3', 'prob_decline_5', 'Rec']].rename(
+    columns={
+        'average_WAR_career': 'avg_WAR_career',
+        'prob_decline_3': '3-Year Similar WAR Probability',
+        'prob_decline_5': '5-Year Similar WAR Probability',
+        'Rec': 'Recommendation'
+    }
+)
+st.dataframe(similar_display)
+
 else:
     st.info("No similar players with alternative recommendations found.")
 
