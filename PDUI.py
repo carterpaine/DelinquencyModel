@@ -147,7 +147,7 @@ def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, p
     pdf.cell(200, 10, txt=f"Player: {player_name}", ln=True)
     pdf.cell(200, 10, txt=f"Decision Context: {decision}", ln=True)
     pdf.cell(200, 10, txt=f"Contract Years: {contract_years}", ln=True)
-    pdf.cell(200, 10, txt=f"Career Avg WAR: {career_avg_WAR_career:.2f}", ln=True)
+    pdf.cell(200, 10, txt=f"Career Avg WAR: {avg_WAR_career:.2f}", ln=True)
     pdf.cell(200, 10, txt=f"3-Year Decline Probability: {prob_3:.2f}", ln=True)
     pdf.cell(200, 10, txt=f"5-Year Decline Probability: {prob_5:.2f}", ln=True)
     pdf.ln(5)
