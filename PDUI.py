@@ -160,7 +160,7 @@ def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, p
         pdf.ln(5)
         for _, row in similar_df.iterrows():
            text = (
-                f"{row['Name']} | avg_WAR_career: {row['average_WAR_career']:.2f} | "
+                f"{row['Name']} | avg_WAR_career: {row['avg_WAR_career']:.2f} | "
                 f"3-Year Similar WAR Probability: {row['prob_decline_3']:.2f} | "
                 f"5-Year Similar WAR Probability: {row['prob_decline_5']:.2f} | "
                 f"Recommendation: {row['Rec']}"
