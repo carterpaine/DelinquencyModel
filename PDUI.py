@@ -23,6 +23,9 @@ player_df['prob_decline_5'] = clf_5.predict_proba(X_5)[:, 1]
 def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
     def between(x, low, high): return low <= x < high
     # Only showing Free Agent logic for brevity; insert full logic here
+    def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
+    def between(x, low, high): return low <= x < high
+
     if decision == "Free Agent":
         if avg_WAR_career >= 5:
             if p3 > 0.7:
@@ -61,8 +64,81 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Consider signing player to a team friendly deal with minimal AAV and club/player options'
         else:
             return 'Consider signing a different player'
-    # Continue with Trade Candidate and Currently Own logic...
+
+    elif decision == "Trade Candidate":
+        if avg_WAR_career >= 5:
+            if years <= 3 and p3 < 0.7:
+                return 'Consider trade, club option years preferred'
+            elif years > 3 and p3 > 0.7:
+                return 'Do not take on player without salary relief'
+            elif years <= 5 and p3 < 0.7 and p5 < 0.7:
+                return 'Make trade for player'
+            elif years > 5 and p3 < 0.7 and p5 > 0.7:
+                return 'Consider making trade with option years or salary relief added'
+            elif p3 < 0.7 and p5 < 0.7:
+                return 'Make trade, player retains value for a long time'
+            else:
+                return 'Consider trading for a different player'
+        elif between(avg_WAR_career, 4, 5) or between(avg_WAR_career, 3, 4) or between(avg_WAR_career, 2, 3):
+            if years < 3 and p3 < 0.5:
+                return 'Consider trade, club option years preferred'
+            elif years >= 3 and p3 > 0.5:
+                return 'Do not take on player without salary relief'
+            elif years < 5 and p3 < 0.6 and p5 < 0.6:
+                return 'Make trade for player'
+            elif years >= 5 and p3 < 0.6 and p5 > 0.6:
+                return 'Consider making trade with option years or salary relief added'
+            elif p3 < 0.6 and p5 < 0.6:
+                return 'Make trade, player retains value for a long time'
+            else:
+                return 'Consider trading for a different player'
+        elif between(avg_WAR_career, 1, 2) or avg_WAR_career < 1:
+            if years < 3 and p3 < 0.5:
+                return 'Player can be valuable for 1-2 seasons. consider trade'
+            else:
+                return 'Do not trade for player'
+
+    elif decision == "Currently Own":
+        if avg_WAR_career >= 5:
+            if years == 1 and p3 > 0.7:
+                return 'Trade player at deadline'
+            elif years == 1 and p3 < 0.7 and p5 > 0.7:
+                return 'Consider short extension if unable trade at deadline'
+            elif years == 1 and p3 < 0.7 and p5 < 0.7:
+                return 'Consider extending player, attempt to resign in offseason'
+            elif years <= 3 and p3 < 0.7:
+                return 'Retain player'
+            elif years > 3 and p3 > 0.7:
+                return 'Retain but consider trades for salary relief'
+            elif years <= 5 and p3 < 0.7 and p5 < 0.7:
+                return 'Retain player'
+            elif years > 5 and p3 < 0.7 and p5 > 0.7:
+                return 'Retain, but consider trades in future, do not extend'
+            elif p3 < 0.7 and p5 < 0.7:
+                return 'Franchise player, consider a long term extension'
+        elif between(avg_WAR_career, 4, 5) or between(avg_WAR_career, 3, 4) or between(avg_WAR_career, 2, 3):
+            if years == 1:
+                return 'Trade player at deadline'
+            elif years < 3 and p3 < 0.5:
+                return 'Retain player'
+            elif years >= 3 and p3 > 0.5:
+                return 'Do not take on player without salary relief'
+            elif years < 5 and p3 < 0.6 and p5 < 0.6:
+                return 'Make trade for player'
+            elif years >= 5 and p3 < 0.6 and p5 > 0.6:
+                return 'Consider making trade with options or relief'
+            elif p3 < 0.6 and p5 < 0.6:
+                return 'Make trade, player retains value'
+        elif between(avg_WAR_career, 1, 2) or avg_WAR_career < 1:
+            if years == 1:
+                return 'Trade player at deadline'
+            elif years < 3 and p3 < 0.5:
+                return 'Player can be valuable for 1-2 seasons. consider trade'
+            else:
+                return 'Do not trade for player'
+
     return "No recommendation"
+
 
 # --- PDF Export Function ---
 def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, prob_3, prob_5, recommendation, similar_df):
