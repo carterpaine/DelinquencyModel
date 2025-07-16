@@ -1,28 +1,22 @@
 import streamlit as st
 import pandas as pd
+import joblib
+from sklearn.impute import SimpleImputer
 
-# Load prediction data
+# Load data
 player_df = pd.read_csv("hitters_2024.csv")
 
-# Features used in model
-features = ['1_WAR', 'G', 'PA', 'HR', 'R', 'RBI', 'SB', 'AVG', 'OBP', 'SLG', 'OPS',
-            'avg_exit_velocity', 'avg_launch_angle', 'hard_hit_pct', 'average_WAR_career']
-features = [f for f in features if f in player_df.columns]
+# Load models and their expected feature sets
+clf_3, features_3 = joblib.load("model_decline_3.joblib")
+clf_5, features_5 = joblib.load("model_decline_5.joblib")
 
 # Impute missing values
-from sklearn.impute import SimpleImputer
 imputer = SimpleImputer(strategy="mean")
-X = pd.DataFrame(imputer.fit_transform(player_df[features]), columns=features)
-
-# Load models
-import joblib
-clf_3 = joblib.load("model_decline_3.joblib")
-clf_5 = joblib.load("model_decline_5.joblib")
+X_3 = pd.DataFrame(imputer.fit_transform(player_df[features_3]), columns=features_3)
+X_5 = pd.DataFrame(imputer.fit_transform(player_df[features_5]), columns=features_5)
 
 # Predict
-X_3 = player_df[features]
 player_df['pred_decline_3'] = clf_3.predict(X_3)
-X_5 = player_df[features]
 player_df['pred_decline_5'] = clf_5.predict(X_5)
 
 # --- Streamlit UI ---
