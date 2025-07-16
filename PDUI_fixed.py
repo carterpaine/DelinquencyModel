@@ -2,8 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # Load prediction data
-player_df = pd.read_csv("hitters_2024_traditional_statcast.csv")
-player_df['1_WAR'] = player_df['WAR']
+player_df = pd.read_csv("hitters_2024.csv")
 
 # Features used in model
 features = ['1_WAR', 'G', 'PA', 'HR', 'R', 'RBI', 'SB', 'AVG', 'OBP', 'SLG', 'OPS',
