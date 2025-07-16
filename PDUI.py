@@ -144,6 +144,7 @@ def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, p
     pdf.set_font("Arial", size=12)
     pdf.cell(200, 10, txt="MLB Player Contract Recommendation", ln=True, align="C")
     pdf.ln(10)
+
     pdf.cell(200, 10, txt=f"Player: {player_name}", ln=True)
     pdf.cell(200, 10, txt=f"Decision Context: {decision}", ln=True)
     pdf.cell(200, 10, txt=f"Contract Years: {contract_years}", ln=True)
@@ -158,16 +159,20 @@ def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, p
         pdf.cell(200, 10, txt="Similar Players with Alternative Recommendations:", ln=True)
         pdf.ln(5)
         for _, row in similar_df.iterrows():
-            text = f"{row['Name']} | WAR: {row['avg_WAR_career']:.2f} | 3yr: {row['prob_decline_3']:.2f} | 5yr: {row['prob_decline_5']:.2f} | Rec: {row['Rec']}"
+            text = (
+                f"{row['Name']} | WAR: {row['average_WAR_career']:.2f} | "
+                f"3yr: {row['prob_decline_3']:.2f} | 5yr: {row['prob_decline_5']:.2f} | "
+                f"Rec: {row['Rec']}"
+            )
             pdf.multi_cell(0, 10, txt=text)
             pdf.ln(1)
     else:
         pdf.cell(200, 10, txt="No similar players with alternative recommendations found.", ln=True)
 
-    pdf_output = BytesIO()
-    pdf.output(pdf_output)
-    pdf_output.seek(0)
-    return pdf_output
+    # Output to memory as bytes
+    pdf_bytes = pdf.output(dest='S').encode('latin1')
+    return BytesIO(pdf_bytes)
+
 
 # --- Streamlit UI ---
 st.title("MLB Player Delinquency Dashboard")
