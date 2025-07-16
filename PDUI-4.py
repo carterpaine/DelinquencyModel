@@ -20,9 +20,9 @@ clf_3 = joblib.load("model_decline_3.joblib")
 clf_5 = joblib.load("model_decline_5.joblib")
 
 # Predict
-X_3 = player_df[features_3]
+X_3 = player_df[features]
 player_df['pred_decline_3'] = clf_3.predict(X_3)
-X_5 = player_df[features_5]
+X_5 = player_df[features]
 player_df['pred_decline_5'] = clf_5.predict(X_5)
 
 # --- Streamlit UI ---
