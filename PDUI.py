@@ -22,9 +22,6 @@ player_df['prob_decline_5'] = clf_5.predict_proba(X_5)[:, 1]
 # --- Recommendation Logic (your full logic here) ---
 def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
     def between(x, low, high): return low <= x < high
-    # Only showing Free Agent logic for brevity; insert full logic here
-    def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
-    def between(x, low, high): return low <= x < high
 
     if decision == "Free Agent":
         if avg_WAR_career >= 5:
