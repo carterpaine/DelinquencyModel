@@ -106,7 +106,7 @@ contract_years = st.number_input("Contract Years", min_value=1, max_value=10, st
 player = player_df[player_df['Name'] == player_name].iloc[0]
 prob_3 = player['prob_decline_3']
 prob_5 = player['prob_decline_5']
-career_avg_WAR_career = player.get('avg_WAR_career', 0)
+avg_WAR_career = player.get('avg_WAR_career', 0)
 recommendation = generate_recommendation(decision, avg_WAR_career, prob_3, prob_5, contract_years)
 
 # --- Similar Players (±1 WAR) with Different Rec ---
