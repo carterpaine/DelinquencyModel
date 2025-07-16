@@ -127,7 +127,7 @@ st.subheader("Player Report")
 st.write(f"**Decision Context:** {decision}")
 st.write(f"**3-Year Decline Probability:** {prob_3:.2f}")
 st.write(f"**5-Year Decline Probability:** {prob_5:.2f}")
-st.write(f"**Career Avg WAR:** {career_avg_WAR_career:.2f}")
+st.write(f"**Career Avg WAR:** {avg_WAR_career:.2f}")
 st.markdown(f"### **Recommendation:** {recommendation}")
 
 # --- Similar Player Suggestions ---
