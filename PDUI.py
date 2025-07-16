@@ -20,39 +20,39 @@ player_df['prob_decline_3'] = clf_3.predict_proba(X_3)[:, 1]
 player_df['prob_decline_5'] = clf_5.predict_proba(X_5)[:, 1]
 
 # --- Recommendation Logic (your full logic here) ---
-def generate_recommendation(decision, avg_war, p3, p5, years):
+def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
     def between(x, low, high): return low <= x < high
     # Only showing Free Agent logic for brevity; insert full logic here
     if decision == "Free Agent":
-        if avg_war >= 5:
+        if avg_WAR_career >= 5:
             if p3 > 0.7:
                 return 'Consider signing player to a 3-4 year contract with higher AAV'
             elif p5 > 0.7:
                 return 'Consider signing player to a 5-6 year contract with higher AAV'
             else:
                 return 'Consider signing player for 8 years or through age 35 season'
-        elif between(avg_war, 4, 5):
+        elif between(avg_WAR_career, 4, 5):
             if p3 > 0.6:
                 return 'Consider signing player to a 2-3 year contract with higher AAV'
             elif p5 > 0.6:
                 return 'Consider signing player to a 4-5 year contract with higher AAV'
             else:
                 return 'Consider signing player for 6 years or through age 32 season'
-        elif between(avg_war, 3, 4):
+        elif between(avg_WAR_career, 3, 4):
             if p3 > 0.5:
                 return 'Consider signing player to a 2 year contract with club options'
             elif p5 > 0.5:
                 return 'Consider signing player to a 3 year contract with club options'
             else:
                 return 'Consider signing player for 5 years with multiple club or player option years'
-        elif between(avg_war, 2, 3):
+        elif between(avg_WAR_career, 2, 3):
             if p3 > 0.5:
                 return 'Consider signing player to a 1 year contract with higher AAV or 2 year deal with a club option'
             elif p5 > 0.5:
                 return 'Consider signing player to a 5-6 year contract with higher AAV'
             else:
                 return 'Consider signing player for 8 years or through age 35 season'
-        elif between(avg_war, 1, 2):
+        elif between(avg_WAR_career, 1, 2):
             if p3 > 0.5:
                 return 'Consider signing a different player'
             elif p5 > 0.5:
@@ -65,7 +65,7 @@ def generate_recommendation(decision, avg_war, p3, p5, years):
     return "No recommendation"
 
 # --- PDF Export Function ---
-def generate_pdf_report(player_name, decision, contract_years, career_avg_war, prob_3, prob_5, recommendation, similar_df):
+def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, prob_3, prob_5, recommendation, similar_df):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", size=12)
@@ -74,7 +74,7 @@ def generate_pdf_report(player_name, decision, contract_years, career_avg_war, p
     pdf.cell(200, 10, txt=f"Player: {player_name}", ln=True)
     pdf.cell(200, 10, txt=f"Decision Context: {decision}", ln=True)
     pdf.cell(200, 10, txt=f"Contract Years: {contract_years}", ln=True)
-    pdf.cell(200, 10, txt=f"Career Avg WAR: {career_avg_war:.2f}", ln=True)
+    pdf.cell(200, 10, txt=f"Career Avg WAR: {career_avg_WAR_career:.2f}", ln=True)
     pdf.cell(200, 10, txt=f"3-Year Decline Probability: {prob_3:.2f}", ln=True)
     pdf.cell(200, 10, txt=f"5-Year Decline Probability: {prob_5:.2f}", ln=True)
     pdf.ln(5)
@@ -106,13 +106,13 @@ contract_years = st.number_input("Contract Years", min_value=1, max_value=10, st
 player = player_df[player_df['Name'] == player_name].iloc[0]
 prob_3 = player['prob_decline_3']
 prob_5 = player['prob_decline_5']
-career_avg_war = player.get('average_WAR_career', 0)
-recommendation = generate_recommendation(decision, career_avg_war, prob_3, prob_5, contract_years)
+career_avg_WAR_career = player.get('avg_WAR_career', 0)
+recommendation = generate_recommendation(decision, avg_WAR_career, prob_3, prob_5, contract_years)
 
 # --- Similar Players (±1 WAR) with Different Rec ---
 similar_players = player_df[
-    (player_df['average_WAR_career'] >= career_avg_war - 1) &
-    (player_df['average_WAR_career'] <= career_avg_war + 1) &
+    (player_df['average_WAR_career'] >= avg_WAR_career - 1) &
+    (player_df['average_WAR_career'] <= avg_WAR_career + 1) &
     (player_df['Name'] != player_name)
 ].copy()
 similar_players['Rec'] = similar_players.apply(
@@ -127,7 +127,7 @@ st.subheader("Player Report")
 st.write(f"**Decision Context:** {decision}")
 st.write(f"**3-Year Decline Probability:** {prob_3:.2f}")
 st.write(f"**5-Year Decline Probability:** {prob_5:.2f}")
-st.write(f"**Career Avg WAR:** {career_avg_war:.2f}")
+st.write(f"**Career Avg WAR:** {career_avg_WAR_career:.2f}")
 st.markdown(f"### **Recommendation:** {recommendation}")
 
 # --- Similar Player Suggestions ---
@@ -138,7 +138,7 @@ else:
     st.info("No similar players with alternative recommendations found.")
 
 # --- PDF Export Button ---
-pdf_bytes = generate_pdf_report(player_name, decision, contract_years, career_avg_war, prob_3, prob_5, recommendation, matching_recs)
+pdf_bytes = generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, prob_3, prob_5, recommendation, matching_recs)
 st.download_button(
     label="📄 Download Player Report as PDF",
     data=pdf_bytes,
