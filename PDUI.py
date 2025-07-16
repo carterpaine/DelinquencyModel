@@ -220,7 +220,7 @@ if not matching_recs.empty:
         'Rec': 'Recommendation'
     }
 )
-st.dataframe(similar_display)
+    st.dataframe(similar_display)
 
 else:
     st.info("No similar players with alternative recommendations found.")
