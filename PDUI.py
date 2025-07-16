@@ -111,8 +111,8 @@ recommendation = generate_recommendation(decision, avg_WAR_career, prob_3, prob_
 
 # --- Similar Players (±1 WAR) with Different Rec ---
 similar_players = player_df[
-    (player_df['average_WAR_career'] >= avg_WAR_career - 1) &
-    (player_df['average_WAR_career'] <= avg_WAR_career + 1) &
+    (player_df['avg_WAR_career'] >= avg_WAR_career - 1) &
+    (player_df['avg_WAR_career'] <= avg_WAR_career + 1) &
     (player_df['Name'] != player_name)
 ].copy()
 similar_players['Rec'] = similar_players.apply(
