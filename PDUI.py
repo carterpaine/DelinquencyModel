@@ -165,8 +165,8 @@ def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, p
                 f"5-Year Similar WAR Probability: {row['prob_decline_5']:.2f} | "
                 f"Recommendation: {row['Rec']}"
         )
-            pdf.multi_cell(0, 10, txt=text)
-            pdf.ln(1)
+    pdf.multi_cell(0, 10, txt=text)
+    pdf.ln(1)
     else:
         pdf.cell(200, 10, txt="No similar players with alternative recommendations found.", ln=True)
 
