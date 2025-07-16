@@ -212,11 +212,11 @@ st.markdown(f"### **Recommendation:** {recommendation}")
 # --- Similar Player Suggestions ---
 if not matching_recs.empty:
     st.subheader("Alternative Options – Similar Players")
-    similar_display = matching_recs[['Name', 'average_WAR_career', 'prob_decline_3', 'prob_decline_5', 'Rec']].rename(
+    similar_display = matching_recs[['Name', 'avg_WAR_career', 'prob_decline_3', 'prob_decline_5', 'Rec']].rename(
     columns={
-        'average_WAR_career': 'avg_WAR_career',
-        'prob_decline_3': '3-Year Similar WAR Probability',
-        'prob_decline_5': '5-Year Similar WAR Probability',
+        'avg_WAR_career': 'Avg WAR',
+        'prob_decline_3': '3Y Prob',
+        'prob_decline_5': '5Y Prob',
         'Rec': 'Recommendation'
     }
 )
