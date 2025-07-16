@@ -2,12 +2,12 @@ import streamlit as st
 import pandas as pd
 
 # Load prediction data
-player_df = pd.read_csv("hitters_2024_traditional_statcast.csv")
+player_df = pd.read_csv("hitters_2024.csv")
 player_df['1_WAR'] = player_df['WAR']
 
 # Features used in model
 features = ['1_WAR', 'G', 'PA', 'HR', 'R', 'RBI', 'SB', 'AVG', 'OBP', 'SLG', 'OPS',
-            'avg_exit_velocity', 'avg_launch_angle', 'hard_hit_pct']
+            'avg_exit_velocity', 'avg_launch_angle', 'hard_hit_pct', 'average_WAR_career']
 features = [f for f in features if f in player_df.columns]
 
 # Impute missing values
