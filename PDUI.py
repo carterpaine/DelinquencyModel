@@ -52,7 +52,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
             else:
                 return 'Sign player to a 1 year contract'
         elif between(avg_WAR_career, 3, 4):
-           if p5 > 0.7:
+            if p5 > 0.7:
                 return 'Sign player to a 5 year contract with team options'
             elif p3 > 0.7:
                 return 'Sign player to a 3 year contract with team options'
