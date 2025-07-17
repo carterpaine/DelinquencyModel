@@ -40,7 +40,9 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Sign player to a 2-3 year contract with higher AAV'
         elif between(avg_WAR_career, 4, 5):
             if p5 > 0.7:
-                return 'Sign player to a 4-5 year contract with team options'
+                return 'Sign player to a 6 year contract'
+            elif p3 > 0.7 and p5 > .5:
+                return 'Sign player to a 6 year contract with team options'
             elif p3 > 0.7:
                 return 'Sign player to a 3 year contract with team options'
             elif p3 < 0.5 and p5 < 0.5:
@@ -160,23 +162,23 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
         elif between(avg_WAR_career, 4, 5) or between(avg_WAR_career, 3, 4) or between(avg_WAR_career, 2, 3):
             if years == 1:
                 return 'Trade player at deadline'
-            elif years < 3 and p3 < 0.5:
+            elif years < 3 and p3 > 0.5:
                 return 'Retain player'
-            elif years >= 3 and p3 > 0.5:
-                return 'Do not take on player without salary relief'
-            elif years < 5 and p3 < 0.6 and p5 < 0.6:
-                return 'Make trade for player'
+            elif years >= 3 and p3 > 0.5 and p5 > 0.5:
+                return 'Retain player'
+            elif years < 5 and p3 < 0.5 and p5 < 0.5:
+                return 'Consider trading player in the next few years'
             elif years >= 5 and p3 < 0.6 and p5 > 0.6:
-                return 'Consider making trade with options or relief'
+                return 'Retain'
             elif p3 < 0.6 and p5 < 0.6:
                 return 'Make trade, player retains value'
             else:
-                return 'Retain'
+                return 'Consider trading, retain if unable'
         elif between(avg_WAR_career, 1, 2) or avg_WAR_career < 1:
             if years == 1:
                 return 'Trade player at deadline'
             elif years < 3 and p3 < 0.5:
-                return 'Player can be valuable for 1-2 seasons. consider trade'
+                return 'Player can be valuable for 1-2 seasons. Retain but consider trades'
             else:
                 return 'Do not trade for player'
 
