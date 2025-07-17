@@ -155,6 +155,31 @@ def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, p
     pdf.multi_cell(0, 10, txt=f"Recommendation: {recommendation}")
     pdf.ln(10)
 
+    # Color bar visualization for probabilities
+    def add_prob_bar(label, prob, y_pos):
+        if prob < 0.3:
+        color = (255, 0, 0)     # Red
+        elif prob > 0.7:
+        color = (0, 200, 0)     # Green
+        else:
+        color = (160, 160, 160) # Gray
+        bar_length = prob * 100  # Scale to 100 px width
+
+        pdf.set_xy(10, y_pos)
+        pdf.set_text_color(0, 0, 0)
+        pdf.cell(40, 10, f"{label}: {prob:.2f}")
+        pdf.set_fill_color(*color)
+        pdf.set_xy(60, y_pos)
+        pdf.cell(bar_length, 10, "", 0, 0, '', True)
+
+# Add bars for both predictions
+        y_start = pdf.get_y() + 2
+        add_prob_bar("3-Year Decline", prob_3, y_start)
+        pdf.ln(12)
+        add_prob_bar("5-Year Decline", prob_5, pdf.get_y() + 2)
+        pdf.ln(15)
+
+
     if not similar_df.empty:
         pdf.cell(200, 10, txt="Similar Players with Alternative Recommendations:", ln=True)
         pdf.ln(5)
@@ -208,6 +233,32 @@ st.write(f"**3-Year Similar WAR Probability:** {prob_3:.2f}")
 st.write(f"**5-Year Similar WAR Probability:** {prob_5:.2f}")
 st.write(f"**Career Avg WAR:** {avg_WAR_career:.2f}")
 st.markdown(f"### **Recommendation:** {recommendation}")
+
+import plotly.graph_objects as go
+
+def color_for_prob(p):
+    if p < 0.3:
+        return "red"
+    elif p > 0.7:
+        return "green"
+    else:
+        return "gray"
+
+bar_chart = go.Figure(data=[
+    go.Bar(
+        x=["3-Year Decline", "5-Year Decline"],
+        y=[prob_3, prob_5],
+        marker_color=[color_for_prob(prob_3), color_for_prob(prob_5)],
+        text=[f"{prob_3:.2f}", f"{prob_5:.2f}"],
+        textposition="outside"
+    )
+])
+bar_chart.update_layout(
+    yaxis=dict(range=[0, 1]),
+    title="Decline Probabilities (Color Coded)",
+    showlegend=False
+)
+st.plotly_chart(bar_chart)
 
 # --- Similar Player Suggestions ---
 if not matching_recs.empty:
