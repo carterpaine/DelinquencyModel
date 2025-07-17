@@ -156,7 +156,7 @@ def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, p
     pdf.ln(10)
 
     # Color bar visualization for probabilities
-    def add_prob_bar(label, prob, y_pos):
+def add_prob_bar(label, prob, y_pos):
     if prob < 0.3:
     color = (255, 0, 0)     # Red
     elif prob > 0.7:
