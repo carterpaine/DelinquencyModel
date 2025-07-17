@@ -83,9 +83,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
             elif p3 >= 0.5:
                 return 'Sign player to a 1 year deal with a club option for second'
             else:
-                return 'Sign player to a team friendly deal with minimal AAV and club/player options'
-        else:
-            return 'Sign a different player'
+                return 'Sign a different player'
 
     elif decision == "Trade Candidate":
         if avg_WAR_career >= 5:
@@ -99,7 +97,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Do not take on player without salary relief'
             elif years <= 3 and p3 < 0.5 and p5 < 0.5:
                 return 'Make trade for player + cash'
-            else
+            else:
                 return 'Consider a different trade'
         elif between(avg_WAR_career, 4, 5) or between(avg_WAR_career, 3, 4):
             if years == 1:
@@ -112,7 +110,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Do not take on player without salary relief'
             elif years <= 3 and p3 < 0.6 and p5 < 0.6:
                 return 'Make trade for player + cash'
-            else
+            else:
                 return 'Consider a different trade'
         elif between(avg_WAR_career, 2, 3):
             if years == 1:
@@ -125,7 +123,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Do not take on player without salary relief'
             elif years <= 3 and p3 < 0.7 and p5 < 0.7:
                 return 'Make trade for player + cash'
-            else
+            else:
                 return 'Consider a different trade'
         elif between(avg_WAR_career, 1, 2):
              if years <= 5 and p5 > 0.8:
@@ -136,7 +134,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Do not take on player without salary relief'
             elif years <= 3 and p3 < 0.8 and p5 < 0.8:
                 return 'Make trade for player + cash'
-            else
+            else:
                 return 'Consider a different trade'
 
     elif decision == "Currently Own":
@@ -157,7 +155,8 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Retain, but consider trades in future, do not extend'
             elif p3 < 0.7 and p5 < 0.7:
                 return 'Franchise player, consider a long term extension'
-            else 'Retain'
+            else:
+                return 'Retain'
         elif between(avg_WAR_career, 4, 5) or between(avg_WAR_career, 3, 4) or between(avg_WAR_career, 2, 3):
             if years == 1:
                 return 'Trade player at deadline'
@@ -171,7 +170,8 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Consider making trade with options or relief'
             elif p3 < 0.6 and p5 < 0.6:
                 return 'Make trade, player retains value'
-            else 'Retain'
+            else:
+                return 'Retain'
         elif between(avg_WAR_career, 1, 2) or avg_WAR_career < 1:
             if years == 1:
                 return 'Trade player at deadline'
