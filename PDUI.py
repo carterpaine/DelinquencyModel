@@ -26,15 +26,15 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
 
     if decision == "Free Agent":
         if avg_WAR_career >= 5:
-            if p5 > .7 :
+            if p5 > 0.7:
                 return 'Sign player for 8 years or through age 35 season'
-            elif p3 > .7 : 
+            elif p3 > 0.7:
                 return 'Sign player for 6 years or through age 32 season'
-            elif p3 < 0.6 & p5 < .6:
+            elif p3 < 0.6 and p5 < 0.6:
                 return 'Sign player to a 2-3 year contract with higher AAV'
-            elif p3 < 0.6 & p5 >= .6:
+            elif p3 < 0.6 and p5 >= 0.6:
                 return 'Sign player to a 3 year contract with higher AAV and 1 extra team option year'
-            elif p3 >= 0.6 & p5 >= .6:
+            elif p3 >= 0.6 and p5 >= 0.6:
                 return 'Sign player to a 4-5 year contract with higher AAV'
             else:
                 return 'Sign player to a 2-3 year contract with higher AAV'
@@ -43,11 +43,11 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Sign player to a 4-5 year contract with team options'
             elif p3 > 0.7:
                 return 'Sign player to a 3 year contract with team options'
-            elif p3 < 0.5 & p5 < .5:
+            elif p3 < 0.5 and p5 < 0.5:
                 return 'Sign player to a 2 year contract'
-            elif p3 < 0.5 & p5 >= .5:
+            elif p3 < 0.5 and p5 >= 0.5:
                 return 'Sign player to a 3 year contract with 1 extra team option year'
-            elif p3 >= 0.5 & p5 >= .5:
+            elif p3 >= 0.5 and p5 >= 0.5:
                 return 'Sign player to a 4 year contract with a 5th year option'
             else:
                 return 'Sign player to a 1 year contract'
@@ -56,11 +56,11 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Sign player to a 5 year contract with team options'
             elif p3 > 0.7:
                 return 'Sign player to a 3 year contract with team options'
-            elif p3 < 0.5 & p5 < .5:
+            elif p3 < 0.5 and p5 < 0.5:
                 return 'Sign player to a 2 year contract'
-            elif p3 < 0.5 & p5 >= .5:
+            elif p3 < 0.5 and p5 >= 0.5:
                 return 'Sign player to a 4 year contract with team options'
-            elif p3 >= 0.5 & p5 >= .5:
+            elif p3 >= 0.5 and p5 >= 0.5:
                 return 'Sign player to a 4 year contract with a 5th year option'
             else:
                 return 'Sign player to a 1 year contract'
@@ -69,12 +69,12 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Sign player to a 3 year contract with team options'
             elif p3 > 0.5:
                 return 'Sign player to a 2 year contract with team options'
-            elif p3 < 0.5 & p5 < .5:
+            elif p3 < 0.5 and p5 < 0.5:
                 return 'Sign player to a 1 year contract'
-            elif p3 < 0.5 & p5 >= .5:
+            elif p3 < 0.5 and p5 >= 0.5:
                 return 'Sign player to a 3 year contract with team options'
-            elif p3 >= 0.5 & p5 >= .5:
-                return 'Sign player to a 2 year contract with a 2 team options'
+            elif p3 >= 0.5 and p5 >= 0.5:
+                return 'Sign player to a 2 year contract with 2 team options'
             else:
                 return 'Sign player to a 1 year contract'
         elif between(avg_WAR_career, 1, 2):
@@ -93,7 +93,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Make trade'
             elif years <= 3 and p3 > 0.5:
                 return 'Make trade, club option years preferred'
-            elif years > 3 and (p3 or p5) <= 0.5:
+            elif years > 3 and (p3 <= 0.5 or p5 <= 0.5):
                 return 'Do not take on player without salary relief'
             elif years <= 3 and p3 < 0.5 and p5 < 0.5:
                 return 'Make trade for player + cash'
@@ -106,7 +106,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Make trade'
             elif years <= 3 and p3 > 0.6:
                 return 'Make trade, club option years preferred'
-            elif years > 3 and (p3 or p5) <= 0.6:
+            elif years > 3 and (p3 <= 0.6 or p5 <= 0.6):
                 return 'Do not take on player without salary relief'
             elif years <= 3 and p3 < 0.6 and p5 < 0.6:
                 return 'Make trade for player + cash'
@@ -119,7 +119,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Make trade'
             elif years <= 3 and p3 > 0.7:
                 return 'Make trade, club option years preferred'
-            elif years > 3 and (p3 or p5) <= 0.7:
+            elif years > 3 and (p3 <= 0.7 or p5 <= 0.7):
                 return 'Do not take on player without salary relief'
             elif years <= 3 and p3 < 0.7 and p5 < 0.7:
                 return 'Make trade for player + cash'
@@ -130,7 +130,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Make trade'
             elif years <= 3 and p3 > 0.8:
                 return 'Make trade, club option years preferred'
-            elif years > 3 and (p3 or p5) <= 0.8:
+            elif years > 3 and (p3 <= 0.8 or p5 <= 0.8):
                 return 'Do not take on player without salary relief'
             elif years <= 3 and p3 < 0.8 and p5 < 0.8:
                 return 'Make trade for player + cash'
@@ -179,9 +179,9 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Player can be valuable for 1-2 seasons. consider trade'
             else:
                 return 'Do not trade for player'
-            
 
     return "No recommendation"
+
 
 # --- PDF Export Function ---
 def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, prob_3, prob_5, recommendation, similar_df):
