@@ -30,11 +30,11 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
                 return 'Sign player for 8 years or through age 35 season'
             elif p3 > 0.7:
                 return 'Sign player for 6 years or through age 32 season'
-            elif p3 < 0.6 and p5 < 0.6:
+            elif p3 < 0.5 and p5 < 0.5:
                 return 'Sign player to a 2-3 year contract with higher AAV'
-            elif p3 < 0.6 and p5 >= 0.6:
+            elif p3 < 0.5 and p5 >= 0.5:
                 return 'Sign player to a 3 year contract with higher AAV and 1 extra team option year'
-            elif p3 >= 0.6 and p5 >= 0.6:
+            elif p3 >= 0.5 and p5 >= 0.5:
                 return 'Sign player to a 4-5 year contract with higher AAV'
             else:
                 return 'Sign player to a 2-3 year contract with higher AAV'
