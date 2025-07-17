@@ -26,75 +26,131 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
 
     if decision == "Free Agent":
         if avg_WAR_career >= 5:
-            if p3 > 0.7:
-                return 'Consider signing player to a 3-4 year contract with higher AAV'
-            elif p5 > 0.7:
-                return 'Consider signing player to a 5-6 year contract with higher AAV'
+            if p5 > .7 :
+                return 'Sign player for 8 years or through age 35 season'
+            elif p3 > .7 : 'Sign player to a 3-4 year contract with higher AAV'
+                return 'Sign player for 8 years or through age 35 season'
+            elif p3 < 0.6 & p5 < .6:
+                return 'Sign player to a 2-3 year contract with higher AAV'
+            elif p3 < 0.6 & p5 >= .6:
+                return 'Sign player to a 3 year contract with higher AAV and 1 extra team option year'
+            elif p3 >= 0.6 & p5 >= .6:
+                return 'Sign player to a 4-5 year contract with higher AAV'
             else:
-                return 'Consider signing player for 8 years or through age 35 season'
+                return 'Sign player to a 2-3 year contract with higher AAV'
         elif between(avg_WAR_career, 4, 5):
-            if p3 > 0.6:
-                return 'Consider signing player to a 2-3 year contract with higher AAV'
-            elif p5 > 0.6:
-                return 'Consider signing player to a 4-5 year contract with higher AAV'
+            if p5 > 0.7:
+                return 'Sign player to a 4-5 year contract with team options'
+            elif p3 > 0.7:
+                return 'Sign player to a 3 year contract with team options'
+            elif p3 < 0.5 & p5 < .5:
+                return 'Sign player to a 2 year contract'
+            elif p3 < 0.5 & p5 >= .5:
+                return 'Sign player to a 3 year contract with 1 extra team option year'
+            elif p3 >= 0.5 & p5 >= .5:
+                return 'Sign player to a 4 year contract with a 5th year option'
             else:
-                return 'Consider signing player for 6 years or through age 32 season'
+                return 'Sign player to a 1 year contract'
         elif between(avg_WAR_career, 3, 4):
-            if p3 > 0.5:
-                return 'Consider signing player to a 2 year contract with club options'
-            elif p5 > 0.5:
-                return 'Consider signing player to a 3 year contract with club options'
+           if p5 > 0.7:
+                return 'Sign player to a 5 year contract with team options'
+            elif p3 > 0.7:
+                return 'Sign player to a 3 year contract with team options'
+            elif p3 < 0.5 & p5 < .5:
+                return 'Sign player to a 2 year contract'
+            elif p3 < 0.5 & p5 >= .5:
+                return 'Sign player to a 4 year contract with team options'
+            elif p3 >= 0.5 & p5 >= .5:
+                return 'Sign player to a 4 year contract with a 5th year option'
             else:
-                return 'Consider signing player for 5 years with multiple club or player option years'
+                return 'Sign player to a 1 year contract'
         elif between(avg_WAR_career, 2, 3):
-            if p3 > 0.5:
-                return 'Consider signing player to a 1 year contract with higher AAV or 2 year deal with a club option'
-            elif p5 > 0.5:
-                return 'Consider signing player to a 5-6 year contract with higher AAV'
+            if p5 > 0.5:
+                return 'Sign player to a 3 year contract with team options'
+            elif p3 > 0.5:
+                return 'Sign player to a 2 year contract with team options'
+            elif p3 < 0.5 & p5 < .5:
+                return 'Sign player to a 1 year contract'
+            elif p3 < 0.5 & p5 >= .5:
+                return 'Sign player to a 3 year contract with team options'
+            elif p3 >= 0.5 & p5 >= .5:
+                return 'Sign player to a 2 year contract with a 2 team options'
             else:
-                return 'Consider signing player for 8 years or through age 35 season'
+                return 'Sign player to a 1 year contract'
         elif between(avg_WAR_career, 1, 2):
-            if p3 > 0.5:
-                return 'Consider signing a different player'
-            elif p5 > 0.5:
-                return 'Consider signing player to a 1 year deal with a club option for second'
+            if p3 < 0.5:
+                return 'Sign a different player'
+            elif p3 >= 0.5:
+                return 'Sign player to a 1 year deal with a club option for second'
             else:
-                return 'Consider signing player to a team friendly deal with minimal AAV and club/player options'
+                return 'Sign player to a team friendly deal with minimal AAV and club/player options'
         else:
-            return 'Consider signing a different player'
+            return 'Sign a different player'
 
     elif decision == "Trade Candidate":
         if avg_WAR_career >= 5:
-            if years <= 3 and p3 < 0.7:
-                return 'Consider trade, club option years preferred'
-            elif years > 3 and p3 > 0.7:
+            if years = 1:
+                return "Make trade'
+            elif years <= 5 and p5 > 0.5:
+                return 'Make trade'
+            elif years <= 3 and p3 > 0.5:
+                return 'Make trade, club option years preferred'
+            elif years > 3 and (p3 or p5) <= 0.5:
                 return 'Do not take on player without salary relief'
-            elif years <= 5 and p3 < 0.7 and p5 < 0.7:
-                return 'Make trade for player'
-            elif years > 5 and p3 < 0.7 and p5 > 0.7:
-                return 'Consider making trade with option years or salary relief added'
-            elif p3 < 0.7 and p5 < 0.7:
-                return 'Make trade, player retains value for a long time'
-            else:
-                return 'Consider trading for a different player'
+            elif years <= 3 and p3 < 0.5 and p5 < 0.5:
+                return 'Make trade for player + cash'
+            else
+                return 'Consider a different trade'
         elif between(avg_WAR_career, 4, 5) or between(avg_WAR_career, 3, 4) or between(avg_WAR_career, 2, 3):
-            if years < 3 and p3 < 0.5:
-                return 'Consider trade, club option years preferred'
-            elif years >= 3 and p3 > 0.5:
+            if years = 1:
+                return "Make trade'
+            elif years <= 5 and p5 > 0.6:
+                return 'Make trade'
+            elif years <= 3 and p3 > 0.6:
+                return 'Make trade, club option years preferred'
+            elif years > 3 and (p3 or p5) <= 0.6:
                 return 'Do not take on player without salary relief'
-            elif years < 5 and p3 < 0.6 and p5 < 0.6:
-                return 'Make trade for player'
-            elif years >= 5 and p3 < 0.6 and p5 > 0.6:
-                return 'Consider making trade with option years or salary relief added'
-            elif p3 < 0.6 and p5 < 0.6:
-                return 'Make trade, player retains value for a long time'
-            else:
-                return 'Consider trading for a different player'
-        elif between(avg_WAR_career, 1, 2) or avg_WAR_career < 1:
-            if years < 3 and p3 < 0.5:
-                return 'Player can be valuable for 1-2 seasons. consider trade'
-            else:
-                return 'Do not trade for player'
+            elif years <= 3 and p3 < 0.6 and p5 < 0.6:
+                return 'Make trade for player + cash'
+            else
+                return 'Consider a different trade'
+        elif between(avg_WAR_career, 3, 4):
+            if years = 1:
+                return "Make trade'
+            elif years <= 5 and p5 > 0.6:
+                return 'Make trade'
+            elif years <= 3 and p3 > 0.6:
+                return 'Make trade, club option years preferred'
+            elif years > 3 and (p3 or p5) <= 0.6:
+                return 'Do not take on player without salary relief'
+            elif years <= 3 and p3 < 0.6 and p5 < 0.6:
+                return 'Make trade for player + cash'
+            else
+                return 'Consider a different trade'
+        elif between(avg_WAR_career, 2, 3):
+            if years = 1:
+                return "Make trade'
+            elif years <= 5 and p5 > 0.7:
+                return 'Make trade'
+            elif years <= 3 and p3 > 0.7:
+                return 'Make trade, club option years preferred'
+            elif years > 3 and (p3 or p5) <= 0.7:
+                return 'Do not take on player without salary relief'
+            elif years <= 3 and p3 < 0.7 and p5 < 0.7:
+                return 'Make trade for player + cash'
+            else
+                return 'Consider a different trade'
+        elif between(avg_WAR_career, 1, 2):
+             if years <= 5 and p5 > 0.8:
+                return 'Make trade'
+            elif years <= 3 and p3 > 0.8:
+                return 'Make trade, club option years preferred'
+            elif years > 3 and (p3 or p5) <= 0.8:
+                return 'Do not take on player without salary relief'
+            elif years <= 3 and p3 < 0.8 and p5 < 0.8:
+                return 'Make trade for player + cash'
+            else
+                return 'Consider a different trade'
 
     elif decision == "Currently Own":
         if avg_WAR_career >= 5:
@@ -234,7 +290,7 @@ def color_for_prob(p):
 
 bar_chart = go.Figure(data=[
     go.Bar(
-        x=["3-Year Decline", "5-Year Decline"],
+        x=["3 Year", "5-Year"],
         y=[prob_3, prob_5],
         marker_color=[color_for_prob(prob_3), color_for_prob(prob_5)],
         text=[f"{prob_3:.2f}", f"{prob_5:.2f}"],
@@ -243,13 +299,13 @@ bar_chart = go.Figure(data=[
 ])
 bar_chart.update_layout(
     yaxis=dict(range=[0, 1]),
-    title="Decline Probabilities (Color Coded)",
+    title="Similar War Probability",
     showlegend=False
 )
 st.plotly_chart(bar_chart)
 
 if not matching_recs.empty:
-    st.subheader("Alternative Options – Similar Players")
+    st.subheader("Similar Players")
     st.dataframe(matching_recs[['Name', 'avg_WAR_career', 'prob_decline_3', 'prob_decline_5', 'Rec']].rename(
         columns={
             'avg_WAR_career': '2024 WAR',
