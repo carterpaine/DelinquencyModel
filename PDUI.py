@@ -158,19 +158,19 @@ def generate_pdf_report(player_name, decision, contract_years, avg_WAR_career, p
     # Color bar visualization for probabilities
 def add_prob_bar(label, prob, y_pos):
     if prob < 0.3:
-    color = (255, 0, 0)     # Red
+        color = (255, 0, 0)     # Red
     elif prob > 0.7:
-    color = (0, 200, 0)     # Green
+        color = (0, 200, 0)     # Green
     else:
-    color = (160, 160, 160) # Gray
-    bar_length = prob * 100  # Scale to 100 px width
+        color = (160, 160, 160) # Gray
+        bar_length = prob * 100  # Scale to 100 px width
 
-    pdf.set_xy(10, y_pos)
-    pdf.set_text_color(0, 0, 0)
-    pdf.cell(40, 10, f"{label}: {prob:.2f}")
-    pdf.set_fill_color(*color)
-    pdf.set_xy(60, y_pos)
-    pdf.cell(bar_length, 10, "", 0, 0, '', True)
+        pdf.set_xy(10, y_pos)
+        pdf.set_text_color(0, 0, 0)
+        pdf.cell(40, 10, f"{label}: {prob:.2f}")
+        pdf.set_fill_color(*color)
+        pdf.set_xy(60, y_pos)
+        pdf.cell(bar_length, 10, "", 0, 0, '', True)
 
 # Add bars for both predictions
     y_start = pdf.get_y() + 2
