@@ -89,7 +89,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
 
     elif decision == "Trade Candidate":
         if avg_WAR_career >= 5:
-            if years = 1:
+            if years == 1:
                 return 'Make trade'
             elif years <= 5 and p5 > 0.5:
                 return 'Make trade'
@@ -102,7 +102,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
             else
                 return 'Consider a different trade'
         elif between(avg_WAR_career, 4, 5) or between(avg_WAR_career, 3, 4):
-            if years = 1:
+            if years == 1:
                 return 'Make trade'
             elif years <= 5 and p5 > 0.6:
                 return 'Make trade'
@@ -115,7 +115,7 @@ def generate_recommendation(decision, avg_WAR_career, p3, p5, years):
             else
                 return 'Consider a different trade'
         elif between(avg_WAR_career, 2, 3):
-            if years = 1:
+            if years == 1:
                 return 'Make trade'
             elif years <= 5 and p5 > 0.7:
                 return 'Make trade'
