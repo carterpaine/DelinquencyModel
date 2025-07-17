@@ -6,7 +6,7 @@ from fpdf import FPDF
 from io import BytesIO
 
 # --- Load Data & Models ---
-player_df = pd.read_csv("Hitter2024.csv")
+player_df = pd.read_csv("hitters_2024.csv")
 clf_3, features_3 = joblib.load("model_decline_3.joblib")
 clf_5, features_5 = joblib.load("model_decline_5.joblib")
 
